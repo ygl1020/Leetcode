@@ -1,0 +1,17 @@
+#可以当天买入和卖出股票且最大可以买卖两次求最大利润
+def maxProfit(self, prices: List[int]) -> int:
+        """
+        dp[i]代表在第i天时所能拥有的最大profit,然后dp[i]数组分为5个状态,dp[i][0]代表步做任何操作,因此一直都为0，dp[i][1]代表第一次拥有股票-->之前就拥有或者当天买入
+        dp[i][2]代表第一次不拥有股票-->之前就已经卖出去了或者今天卖出, dp[i][3]代表第二次拥有股票-->之前就拥有或者今天买入 dp[i][4]代表第二次不拥有股票-->之前就不拥有或者
+        今天卖出. 注意题目中表示股票可以当天买入当天卖出,因此初始化dp[0]的时候是dp[0][1]=-prices[0] 以及dp[0][3]=-prices[0]代表当天买入
+        dp[0][2]=-prices[0] 以及dp[0][4]=-prices[0]代表当天买入然后卖出
+        """
+        dp = [[0,0,0,0,0]] * len(prices)
+        dp[0][1]=-prices[0]
+        dp[0][3]=-prices[0]
+        for i in range(1,len(prices)):
+            dp[i][1] = max(dp[i-1][1], dp[i-1][0]-prices[i])
+            dp[i][2] = max(dp[i-1][2], dp[i-1][1] +prices[i])
+            dp[i][3] = max(dp[i-1][3], dp[i][2]-prices[i])
+            dp[i][4] = max(dp[i-1][4], dp[i-1][3]+prices[i])
+        return max(dp[-1])
