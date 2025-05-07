@@ -38,15 +38,15 @@ def findTargetSumWays(self, nums: List[int], target: int) -> int:
         # return res
 
         # dp
-        total = sum(nums)
-        target_sum = (total+target) // 2 
-        if abs(target) > total:
+        if (sum(nums)+target)%2 !=0:
             return 0
-        if (total+target) % 2  !=0:
+        if abs(target) > sum(nums): # 注意当abs(target)比sum(nums)大时也不可能有答案
             return 0
-        dp = [0] * (target_sum+1)
+        target_sum = (sum(nums)+target)//2
+        dp = [0] * (target_sum+1) # 背包容量为j的背包能装满时的最大可能性
         dp[0] = 1
         for i in nums:
-            for j in range(target_sum,i-1,-1): # 这里注意range是(target_sum,i-1,-1) 而不是(target_sum,-1,-1)
-                dp[j] = dp[j] + dp[j-i]
+            for j in range(target_sum,i-1,-1): 
+                dp[j] = dp[j]+dp[j-i] #递推公式需要自己推演一下,我不要直接记
+        print(dp)
         return dp[target_sum]

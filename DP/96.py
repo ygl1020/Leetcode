@@ -18,8 +18,8 @@ def numTrees(self, n: int) -> int:
         """
         dp = [0]*(n+1) # 我们会把结果进行累加所以需要初始化为0
         dp[0]=1
-        for i in range(1,n+1): # 代表从1开始到n的所有的可能性
-            for j in range(1,i+1): #代表从1开始到i的所有的root组合
+        for i in range(1,n+1): # 第一个for循环时遍历2-n的每一个节点的可能性
+            for j in range(1,i+1): # 第二个for循环计算dp[i]的值,然后dp[i]是由dp[0]到dp[i-1]构成的,所有我们range是(2,i+1)
                 dp[i] += dp[j-1] * dp[i-j]
         print(dp)
         return dp[n]
