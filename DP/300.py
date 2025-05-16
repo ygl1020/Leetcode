@@ -14,7 +14,7 @@ def lengthOfLIS(self, nums: List[int]) -> int:
         dp = [1] *len(nums)
         for i in range(1,len(nums)):
             for j in range(0,i):
-                if nums[i]>nums[j]:
+                if nums[i]>nums[j]: # error if nums[i]>nums[i-1]:因为我们考虑的是非连续最长递增子序列的长度,所以dp[i]是由dp[0]-dp[i-1]决定的而不是单独由dp[i-1]决定的
                     dp[i] = max(dp[j]+1,dp[i])
         # print(dp)
         return max(dp)
