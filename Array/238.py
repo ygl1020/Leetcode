@@ -16,17 +16,16 @@ def productExceptSelf(self, nums: List[int]) -> List[int]:
         """
         计算nums的prefix和postfix然后根据对应index的值进行相乘
         """
-        res = [0] * len(nums)
-        pre = [0] * len(nums)
-        post = [0] * len(nums)
-        pre[0],post[-1]= 1,1
+        prefix = [1 for _ in range(len(nums))] 
+        backfix = [1 for _ in range(len(nums))] 
+        res = []
         for i in range(1,len(nums)):
-            pre[i] = pre[i-1]* nums[i-1]
-        print(pre)
-        for i in range(len(nums)-2,-1,-1):
-            print(i,i+1,i+1)
-            post[i] = post[i+1]*nums[i+1]
-        print(post)
-        for i in range(len(nums)):
-            res[i] = pre[i]*post[i]
+            prefix[i] = nums[i-1] * prefix[i-1]
+   
+        for i in range(len(nums)-2,-1,-1):# 注意这里的range是(len(nums)-2,-1,-1)
+            backfix[i] = nums[i+1] * backfix[i+1] 
+
+        print(prefix,backfix)
+        for i in range(0,len(nums)):
+            res.append(prefix[i]*backfix[i])
         return res

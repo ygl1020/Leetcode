@@ -5,7 +5,7 @@ def longestConsecutive(self, nums: List[int]) -> int:
         """
         unique = set(nums)
         res =0
-        for i in unique: # error for checking nums
+        for i in unique: # error for checking nums # 注意这里我们直接用unique就好了, 不需要用nums
             if (i-1) not in unique:
                 long = 0
                 while (i+long) in unique:
