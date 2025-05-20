@@ -30,3 +30,19 @@ def lengthOfLongestSubstring(self, s: str) -> int:
             unique.add(s[r])
             res = max(res,r-l+1)
         return res
+        # method 3
+        unique  = set()
+        l,r = 0,0
+        res = 0
+        for r in range(0,len(s)):
+            if s[r] not in unique:
+                unique.add(s[r])
+                res = max(res, r-l+1)
+            else:
+                while s[l] != s[r]:
+                    unique.remove(s[l]) # 因为我们需要找连续的最长不重复字符串,所以当遇见重复的字符串时，我们需要移动左指针,一直到我们找到和当前s[r]相同的字符串.这个过程中我们需要不断删除s[r]在unique里面的value
+                    l+=1
+                l+=1
+                unique.add(s[r])
+                print(l,r)
+        return res

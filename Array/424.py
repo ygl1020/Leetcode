@@ -9,7 +9,7 @@ def characterReplacement(self, s: str, k: int) -> int:
         res = 0
         for r in range(0,len(s)):
             count[s[r]] = 1 + count.get(s[r],0)
-            while r-l+1 - max(count.values()) >k:
+            while r-l+1 - max(count.values()) >k: # 因为我们求的是连续字符串的最长相同字符串的长度，遇到当前字符串的长度-字符串里面出现频率最高的数的差>k时,这个字符串就是不合格的,我们需要移动左指针一直到当前字符串符合要求为止.这个过程中我们需要不断的更新count字典
                 count[s[l]] -=1
                 l +=1
             res = max(res, r-l+1)
