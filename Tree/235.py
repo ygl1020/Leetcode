@@ -48,3 +48,16 @@ def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -
         right = self.lowestCommonAncestor(root.right,p,q)
         if right:
             return right
+        
+        #method 4
+        """
+        当p和q小于cur那么就往左边找,当p和q大于cur那么就往右边找,否者如果p==cur.val 或者q==cur.val 或者 p>cur.val>q.val etc 那么最小公共祖先就是当前的cur
+        """
+        cur = root
+        while cur:
+            if q.val > cur.val and p.val > cur.val:
+                cur = cur.right
+            elif q.val < cur.val and p.val < cur.val:
+                cur = cur.left
+            else:
+                return cur

@@ -89,3 +89,17 @@ def isValidBST(self, root: Optional[TreeNode]) -> bool:
         right = postOrder(root.right)
         return True if left and right else False
     return postOrder(root)
+    #method 5
+    """
+    method4 用前序遍历,思路在于我们只需要保证每一个节点都再固定的范围内,如果该节点不再固定的范围内,那么可以直接return false.否者我们需要继续往下遍历剩余的node,如果往左遍历
+        那么我们就需要更新右边界为当前节点的value保持左边界不变,如果是往右遍历,那么我们应该更新左边界为当前node的value然后保存右边界不变.最后如果左右子树都return true我们就可以
+        判断这个tree是bst
+    """
+    def vaild(root,left,right):
+            if not root:
+                return True
+            if root.val <=left or root.val >= right:
+                return False
+            return vaild(root.left, left, root.val) and vaild(root.right, root.val,right)
+    return vaild(root, float('-inf'), float('inf'))
+    

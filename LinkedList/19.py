@@ -5,8 +5,8 @@ def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNod
     所以fast指针需要先走4步,最后fast指针指向none然后slow指向3,这时我们直接删去node4然后返回dummy_head.next就可以了
     """
     dummy_head = ListNode(next=head)
-    slow =fast = dummy_head
-    for i in range(n+1): #fast走n+1步
+    slow =fast = dummy_head # 需要把fast和slow指针也指向dummy_head这样就可以handle删除head节点的情况
+    for i in range(n+1): #因为我们把指针初始化在dummy_head,所以需要n+1
         fast = fast.next
     while fast: #同时更新slow,fast直到fast为none
         fast = fast.next

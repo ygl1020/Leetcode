@@ -1,18 +1,26 @@
 #求最大深度
 def maxDepth(self, root: Optional[TreeNode]) -> int:
-        # use bfs method and return the len(levels)
+        # postorder
+        # def postOrder(root):
+        #     if not root:
+        #         return 0
+        #     left = postOrder(root.left)
+        #     right = postOrder(root.right)
+        #     depth = 1 + max(left,right)
+        #     return depth
+        # return postOrder(root)
+
+        # bfs
         if not root:
             return 0
-        levels = []
-        queue=collections.deque([root])
+        queue,levels = collections.deque([root]),0
         while queue:
-            level = []
-            level_nodes = len(queue)
-            for i in range(level_nodes):
-                node = queue.popleft()
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-            levels.append(level)
-        return len(levels)
+            level_len = len(queue)
+            for i in range(level_len):
+                cur = queue.popleft()
+                if cur.left:
+                    queue.append(cur.left)
+                if cur.right:
+                    queue.append(cur.right)
+            levels +=1
+        return levels
