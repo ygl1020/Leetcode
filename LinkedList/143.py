@@ -6,7 +6,7 @@ def reorderList(self, head: Optional[ListNode]) -> None:
         list修改了,所以是错误的. 寻找中间的position我们用快慢指针.然后我们把第二个list进行反转,最后把第一个和第二个list 进行merge
         """
         # use slow,fast pointer to indentify the middle position
-        slow, fast = head, head.next
+        slow, fast = head, head.next  # error1 快指针应该指向head.next而不是head
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
@@ -16,14 +16,14 @@ def reorderList(self, head: Optional[ListNode]) -> None:
         # break the link beween first segment list and second
         slow.next = None
         #reverse the second part list
-        pre,cur = None,second
+        pre,cur = None,second 
         while cur:
             tmp = cur.next
             cur.next = pre
             pre = cur
             cur=tmp
         # merge two segment list together
-        first, second = head, pre
+        first, second = head, pre  # error 2: first list的开头不是slow而是head
         while first and second:
             tmp1 = first.next
             tmp2 = second.next

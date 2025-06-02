@@ -1,8 +1,9 @@
 #merge两个sorted linked list
 def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         """
-        这题因为可能修改最开始的头节点所有需要设置一个dummy_head. 然后当list1和list2都不为空时，我们比较list1节点和list2节点的大小.之后更新更新的那个
-        节点对应的next节点,以及移动tmp节点.最后我们需要注意一下list1或者list2有没有剩余的值,因为我们的while条件是只要list1和list2都不为空时才会继续
+        这题的解法其实是再两个list里面找到更小的那一个,然后把这个list放入到我们merged list里面-->tail.next=list2 or list1, 然后我们把被添加进merged list的list往前
+        更新一个单位继续进行下一个对比,再每一次对比结束我们都需要更新tail到当前list的最后一个节点,否者它会不断的覆盖更新的值导致报错.最后当list1和list2当中有一个list
+        为空时,我们退出循环然后把不为空的那个list放到merged list的最后面
         """
         dummy = ListNode()
         tail = dummy

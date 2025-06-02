@@ -1,8 +1,8 @@
 #判断两个tree是否是相同的tree
 def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         """
-        bfs同时遍历两棵树, 当两个数的节点都为空那么就直接进行一个node的对比,这里不能直接return true因为后面的node还没有对比完 , 当两棵树中之一一个树的node是空或者两个树都不为空并且两个node的值不相等,可以直接return false
-        否者我们对两个树继续进行正常bfs的步骤
+        使用bfs时while循环的条件应该为当两个queue都不为空时,然后判断是否两个临时queue是否都为空,否者判断是否其中一个为空且另一个不为空,又或者两个queue的val不相等
+        那么就直接return false.否者的话就把两个node的左右节点都放入对应的queue里面
         """
         # method 1: bfs
         queue1 = collections.deque([p])
@@ -21,8 +21,9 @@ def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         return True
 
         """
-        再递归里面,边界条件如果遇见两个node 都是true,那么我们return true.因为这里需要对当前节点的对比结果进行return
-        否者如果两个数中只有其中一个node为空又或者两个node的值不相等我们都return false,每次进行函数召唤时,我们最先check当前的两个node是否是相等的,然后我们继续check他们的分节点， 最后我们开始递归并对左右两个数的子树结果进行汇总
+        使用递归的话当在递归过程中如果某一对的node是相同的,我们不能直接return True,因为我们需要验证全部的node pair都是相等的.在这个过程中如果某一对nodes相同我们就继续
+        递归判断他们的subnodes pairs,然后递归过程中只要出现有一对pair不相等-->if not p or not q or p.val!=q.val我们就可以return False. 最后当我们到了leaf节点就可以
+        直接return true了
         """
         # method 2:
         # if not p and not q:
