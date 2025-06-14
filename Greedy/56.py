@@ -22,3 +22,20 @@ def merge(self, intervals: List[List[int]]) -> List[List[int]]:
                 end = max(end,intervals[i][1])
         res.append([start,end]) # 记住要把最后一个start,end放入res数组.因为for循环结束之后的最后一个数组再for循环中不会被放入res中
         return res
+    
+     
+        """
+        这题的具体思路是一定先把interval按照最左边的value进行排序,然后我们遍历interval里面的元素,对比最新放入res数组的末端和当前interval 元素的初始端
+        判断他们是否overlap,如果有overlap就更新res[-1][1]-->最后放入res数组的末尾节点(因为排序后我们可以确保开始节点一定是最小的所以只需要更新末尾的最大节点).
+        如果没有overlap我们就直接把interval元素放入res
+        我们一开始就放入第一个元素再res里面是为了防止一些edge case
+        """
+        intervals.sort()
+        res = [intervals[0]]
+        for start,end in intervals[1:]:
+            lastEnd = res[-1][1]
+            if start <= lastEnd:
+                res[-1][1] = max(lastEnd,end)
+            else:
+                res.append([start,end])
+        return res

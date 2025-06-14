@@ -9,6 +9,8 @@ def maxSubArray(self, nums: List[int]) -> int:
         # total,res =0, float('-inf')
         # for i in nums:
         #     total+=i
+        #     # if total >=0: #这里如果用了if条件的话如果出现nums里面都是负数就会跳过执行而导致res不会进行更新
+        #     #     res = max(res,total)
         #     res = max(res,total)
         #     if total<0:
         #         total = 0
