@@ -61,3 +61,17 @@ def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -
                 cur = cur.left
             else:
                 return cur
+            
+        # method 5
+        """
+        相比于236,我们这里多了一个条件是bsf,那么就表明我们可以根据这个node order来进行递归,如果p和q再root的左边,我们就不需要往右边搜索,反之亦然. 最后如果p和q再root的左右两边,或者p和q其中有一个是root的话那么我们可以直接return root
+        这里需要注意的是我们需要再调用lowestCommonAncestor的函数时直接进行return来保存递归的结果,否者的话即使找到了正确的root,我们可能会丢失正确的答案而造成的错误的结果, tiem complecity is o(height of the tree)
+        """
+        x = root.val
+        if p.val <x and q.val < x:
+            return self.lowestCommonAncestor( root.left, p, q)
+            # error self.lowestCommonAncestor( root.left, p, q)
+        if p.val >x and q.val > x:
+            return self.lowestCommonAncestor( root.right, p, q)
+         # error self.lowestCommonAncestor( root.right, p, q)
+        return root
