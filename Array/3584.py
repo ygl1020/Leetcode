@@ -1,7 +1,9 @@
 # 求一个数组寻找一个中固定长度m的子序列,子序列可以不连续,求所以子序列中第一个vlaue和最后一个value最大的乘积
 def maximumProduct(self, nums: List[int], m: int) -> int:
         """
-        因为这个并没有要求subsequence需要连续,所以indx j 可以考虑 index j-m+1之前的全部的值用for循环的j来确定末尾的index, 然后我们记录当前末尾indx前面出现的最大值和最小值,不断更新这个nums[j] 和min以及max的乘积来获取最大的结果
+        我们需要从nums里面选取m个element组成一个subsequence.这个subsequence的第一个value乘以最后一个value的值需要为能找到最大值.当我们知道了m的vlaue,那么
+        我们就可以确定m的最小的end index, 之后我们要做的就是不断向后一定end index同时记录前面start index的所有取值中的最大值和最小值,这样我们就可以算出以当前
+        end index结尾所有得到的最大值,然后在所有最大值里面我们需要取一个最大值. 另外需要注意的是这里subsequence的取值是有序的,但不是连续的
         """
 
         n = len(nums)
@@ -36,3 +38,5 @@ def maximumProduct(self, nums: List[int], m: int) -> int:
         #         max_product = max(max_product, product)
     
         # return max_product
+
+print(".".join(["leetcode","com"]))

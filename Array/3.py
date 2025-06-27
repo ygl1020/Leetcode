@@ -46,3 +46,30 @@ def lengthOfLongestSubstring(self, s: str) -> int:
                 unique.add(s[r])
                 print(l,r)
         return res
+        """
+        这题的思路是l,r两个指针,我们不断把r指针遍历过的value放入set,然后每次移动r指针之后判断当前的s[r]是否已经再set出现过了,如果出现过那么我们就需要找到的之前遍历
+        过的sequnce里面value是s[r]的index,然后把l指针移动到r+1的位置.这个过程我们需要一个while循环,循环里面不断删除l指针对应的值,然后l+=1，当找到了index的位置我们
+        退出while循环.这时我们需要从set里面删除s[l]的值然后把l移动到l+1,
+
+        如果最外层用的是for循环那么因为else结束r会加一，所以我们先把当前r指针对应的值让如set里面,然后l指针加一
+        """
+        #method4
+        if not s:
+            return 0
+        if len(s) ==1:
+            return 1
+        res = 0
+        l,r = 0,0
+        unique = set()
+        while r <len(s):
+            if s[r] not in unique:
+                unique.add(s[r])
+                res = max(res,r-l+1)
+                r +=1
+            else:
+                while s[r] != s[l]:
+                    unique.remove(s[l])
+                    l +=1
+                unique.remove(s[l])
+                l += 1    
+        return res

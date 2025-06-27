@@ -1,26 +1,25 @@
 #在一个sorted rotated array里面找到一个特定的值,然后返回其坐标,没找到的话返回-1
 def search(self, nums: List[int], target: int) -> int:
         """
-        这题最好画一个图,然后把所有的可能性给思考清楚.大的情况可以分为nums[mid]在左边的sorted array当nums[mid] > nums[l]然后在这个if条件里面我们可以分为三总情况1)nums[mid] < target or nums[l] > target-->我们搜索右边的情况, 2)其他情况搜索左边的区间. 第二个大情况时nums[mid]在右边的sorted array, 然后细分三种可能性1)target < nums[mid] or target > nums[r]-->搜索左边
-        2）其他情况搜索右边
+        回顾一下这题是对sorted 数组进行rotate了,所以我们可以把mid按照在左边的区间和右边的区间进行分类讨论. 当nums[mid] >nums[r]时我们可以肯定mid在左区间,否者如果在sorted数组里面不可能
+        出现这个情况. 确定了mid左区间,那么什么时候把左指针向右移动? -->nums[mid] <target or nums[l] >target 其他情况就把右指针向左移动
+        当mid在有右区间什么时候把右指针向左移动? --> target < nums[mid] or nums[r] < target
+        这题要活用l,r两个区间的值和target作对比来确定移动方向
         """
-        l,r = 0, len(nums)-1
+        l,r = 0,len(nums)-1
         while l <=r:
-            mid = (r+l) //2
+            mid = (r+l)//2
+            print(mid)
             if nums[mid] == target:
                 return mid
-            # left portion segment
-            if nums[mid] >= nums[l]:
-                if nums[mid] < target or nums[l] > target:
-                    l = mid +1
+            if nums[mid] > nums[r]: # error1 
+                if nums[mid] <target or nums[l] > target:
+                    l = mid+1
                 else:
-                    r = mid-1
-                print('left',l,r)
-            #right portion segment
+                    r=mid-1
             else:
-                if target < nums[mid] or target > nums[r]:
-                    r = mid -1
+                if nums[mid] >target or nums[r] < target: # error2
+                    r=mid-1
                 else:
-                    l = mid +1
-                print('right',l,r)
+                    l=mid+1
         return -1

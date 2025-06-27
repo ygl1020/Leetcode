@@ -48,3 +48,22 @@ def nextPermutation(self, nums: List[int]) -> None:
             # 交换 nums[i] 和 nums[j]
             nums[i], nums[j] = nums[j], nums[i]
         nums[i+1:] = nums[i+1:][::-1]
+        
+        #method 3
+        i,tmp = len(nums)-2,1
+        while tmp:
+            if i <0:
+                print(nums)
+                # nums= nums[::-1] 不要新建一个nums，所以我们需要对nums直接进行reverse的操作
+                nums.reverse()
+                # print(i)
+                break
+            if nums[i] >= nums[i+1]:
+                i-=1
+            else:
+                j = len(nums)-1
+                while nums[j] <= nums[i]:
+                    j-=1
+                nums[j],nums[i] = nums[i],nums[j]
+                nums[i+1:] = nums[i+1:][::-1]  
+                tmp =0

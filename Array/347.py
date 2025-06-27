@@ -19,25 +19,22 @@ def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         # while len(res)<k:
         #     res.append(arr.pop()[1])
         # return res
+        
         """
-        method 2, 我们1)先计算每一个元素出现的次数并把元素作为key,出现次数作为value储存再字典里.2)创建一个二维字典buck_arr,字典长度为len(nums)+1-->出现counts最多的可能就是一个元素出现len(nums)次
-        然后字典的每一个element--buck_arr[i]是一个字典用来存储所有出现过i次的元素. 3)最后我们从后开始遍历buck_arr-->从大到小的出现次数,然后找到k个出现最多的元素加入res
+        using min heap total time complexcity is n + klogn = n
         """
-        # buck_arr = [[] * (len(nums)+1] casued error bc this create 5 reference array and appending to one sublist affects all because they are actually the same list object.
-        buck_arr = [[] for _ in range(len(nums)+1)]
-        count = {}
+        # using min heap total time complexcity is n + klogn = n
+        # create dict to store counts
+        counts = defaultdict(int)
         for i in nums:
-            count[i] = 1+count.get(i,0)
-        print(count)
-        for v,c in count.items():
-            buck_arr[c].append(v)
+            counts[i] +=1
+        #initialize heap
+        max_count = [(-fre,v) for v,fre in counts.items()]
+        heapq.heapify(max_count)
+        # pop out the top k element from heap
         res = []
-        print(buck_arr)
-        for i in range(len(buck_arr)-1,0,-1):
-            for n in buck_arr[i]:
-                print(buck_arr[i])
-                if n is not None: # 这里不能用if n , 因为这样的话出现了elment为0的情况就会过滤掉这个元素
-                    res.append(n)
-                if len(res) >=k:
-                    return res
+        for i in range(k):  # takes klogn time
+            fre,v = heapq.heappop(max_count)
+            res.append(v)
+        return res
         
